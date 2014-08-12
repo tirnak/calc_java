@@ -1,7 +1,6 @@
 package com.example.kirill;
 
 import java.util.Scanner;
-import java.util.StringTokenizer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,11 +15,7 @@ public class Main {
 
         checkInput(str);
 
-        StringTokenizer st = new StringTokenizer(str, "+-*/()", true);
-
-        for (i = 0, n = st.countTokens(); i < n; i++) {
-            System.out.println(st.nextToken());
-        }
+        Parser parser = new Parser(str);
 
         System.out.print(str);
     }
