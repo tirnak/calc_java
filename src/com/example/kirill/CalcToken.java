@@ -22,7 +22,7 @@ public class CalcToken {
 
     }
 
-    public String content = new String();
+    public String content;
 
     public Type type;
 
@@ -30,6 +30,7 @@ public class CalcToken {
         content = str;
 
         if (isInteger()) {
+            castConstToNum();
             type = Type.NUM;
         } else if (isAddition()) {
             type = Type.ADD;
@@ -67,7 +68,7 @@ public class CalcToken {
 
     private boolean isInteger() {
 
-        if (content == "PI" || content == "E") {
+        if (content.equals("PI") || content.equals("E")) {
             return true;
         }
 
@@ -80,35 +81,60 @@ public class CalcToken {
         return true;
     }
 
+    private void castConstToNum() {
+        if (content.equals("PI")) {
+            content = "3.14159265359";
+        } else if (content.equals("E")) {
+            content = "2.71828182846";
+        }
+    }
+
     private boolean isFunc() {
-        return content == "cos" || content == "sin" || content == "exp";
+        return content.equals("cos") || content.equals("sin") || content.equals("exp");
     }
 
     private boolean isAddition() {
-        return content == "+";
+        return content.equals("+");
     }
 
     private boolean isSubstraction() {
-        return content == "-";
+        return content.equals("-");
     }
 
     private boolean isMultiplication() {
-        return content == "*";
+        return content.equals("*");
     }
 
     private boolean isDivision() {
-        return content == "/";
+        return content.equals("/");
     }
 
     private boolean isOpenBracket() {
-        return content == "(";
+        return content.equals("(");
     }
 
     private boolean isClosedBracket() {
-        return content == ")";
+        return content.equals(")");
     }
 
+    @Override
+    public boolean equals (Object object) {
 
+        try {
+            CalcToken calcToken = (CalcToken) object;
+
+            if (this.getType().equals(calcToken.getType()) && this.content.equals(calcToken.content)) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (ClassCastException e) {
+            return false;
+        }
+
+
+    }
 
 
 

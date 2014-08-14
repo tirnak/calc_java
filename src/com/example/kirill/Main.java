@@ -15,9 +15,13 @@ public class Main {
 
         checkInput(str);
 
+
         Parser parser = new Parser(str);
 
-        System.out.print(str);
+        Calculator calc = new Calculator(parser);
+
+        System.out.print(str + " = " + calc.eval());
+
     }
 
     private static void checkInput(String str) {
