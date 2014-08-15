@@ -11,7 +11,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        int i, n;
         Scanner in = new Scanner(System.in);
 
         String str = checkString2;//in.nextLine().replace(" ", "");

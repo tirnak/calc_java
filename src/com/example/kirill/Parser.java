@@ -28,7 +28,7 @@ public class Parser {
 
         for (int i = 0, length = tokens.size(); i < length; i++) {
 
-            if (tokens.get(i).getType() == CalcToken.Type.SUBSTRACT &&
+            if (tokens.get(i).getType() == CalcToken.Type.SUBTRACT &&
                     tokens.get(i-1).isStartOfSubExpr()) {
 
                 tokens.set(

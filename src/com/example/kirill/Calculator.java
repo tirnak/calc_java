@@ -25,13 +25,11 @@ public class Calculator {
 
     public double eval() {
 
-        double result = 0.0;
-
         while (bracketPairs.size() > 0) {
 
             BracketPair bracketPair = bracketPairs.pop();
 
-            List<CalcToken> expr = (List<CalcToken>) tokens.subList(bracketPair.posOpened + 1, bracketPair.posClosed);
+            List<CalcToken> expr = tokens.subList(bracketPair.posOpened + 1, bracketPair.posClosed);
 
             if (tokens.get(bracketPair.posOpened - 1).getType() == CalcToken.Type.FUNC) {
                 evalSubExpr(expr, tokens.get(bracketPair.posOpened - 1));
@@ -75,8 +73,6 @@ public class Calculator {
         if (expr.size() > 1) {
             int operationIndex = 0, i1, i2;
             Operation operation;
-            double operand1, operand2;
-
 
             CalcToken mult = new CalcToken("*");
             CalcToken div = new CalcToken("/");

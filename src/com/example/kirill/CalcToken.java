@@ -10,16 +10,11 @@ public class CalcToken {
         NUM,
         FUNC,
         ADD,
-        SUBSTRACT,
+        SUBTRACT,
         MULTIPLY,
         DIVIDE,
         OPEN_BRACKET,
         CLOSE_BRACKET
-    }
-
-    public enum Group {
-        NULL,
-
     }
 
     public String content;
@@ -37,7 +32,7 @@ public class CalcToken {
         } else if (isFunc()) {
             type = Type.FUNC;
         } else if (isSubstraction()) {
-            type = Type.SUBSTRACT;
+            type = Type.SUBTRACT;
         } else if (isMultiplication()) {
             type = Type.MULTIPLY;
         } else if (isDivision()) {
