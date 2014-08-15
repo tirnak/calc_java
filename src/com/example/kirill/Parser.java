@@ -8,15 +8,11 @@ public class Parser {
 
     public Parser(String str) {
 
-        tokens.add(new CalcToken(""));
-
         StringTokenizer st = new StringTokenizer(str, "+-*/()", true);
 
         while (st.hasMoreTokens()) {
             tokens.add(new CalcToken(st.nextToken()));
         }
-
-        tokens.add(new CalcToken(""));
 
         correctNegativeNumbers();
 

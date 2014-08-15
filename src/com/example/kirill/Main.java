@@ -5,13 +5,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Main {
+    
+    final static String checkString = "11+(exp(2.010635+sin(PI/2)*3)+50)/2";
+    final static String checkString2 = "3+(-30)/(-30)";
 
     public static void main(String[] args) {
 
         int i, n;
         Scanner in = new Scanner(System.in);
 
-        String str = in.nextLine().replace(" ", "");
+        String str = checkString2;//in.nextLine().replace(" ", "");
 
         checkInput(str);
 

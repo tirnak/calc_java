@@ -7,6 +7,13 @@ import java.util.*;
  */
 public class Calculator {
 
+    public enum Operation {
+        ADDITION,
+        SUBSTRACTION,
+        DIVISION,
+        MULTIPLICATION
+    }
+
     public ArrayList<CalcToken> tokens = new ArrayList<CalcToken>();
 
     public LinkedList<BracketPair> bracketPairs = new LinkedList<BracketPair>();
@@ -29,18 +36,23 @@ public class Calculator {
             if (tokens.get(bracketPair.posOpened - 1).getType() == CalcToken.Type.FUNC) {
                 evalSubExpr(expr, tokens.get(bracketPair.posOpened - 1));
                 tokens.remove(bracketPair.posOpened - 1);
+                tokens.remove(bracketPair.posOpened - 1);
+                tokens.remove(bracketPair.posOpened);
             } else {
                 evalSubExpr(expr);
+                tokens.remove(bracketPair.posOpened);
+                tokens.remove(bracketPair.posOpened + 1);
             }
 
-            tokens.remove(bracketPair.posOpened - 1);
-            tokens.remove(bracketPair.posOpened);
+
 
             defineBrackets();
 
         }
 
-        return Double.parseDouble(tokens.get(1).content);
+        evalSubExpr(tokens);
+
+        return Double.parseDouble(tokens.get(0).content);
     }
     private void evalSubExpr(List<CalcToken> expr, CalcToken func) {
 
@@ -61,7 +73,9 @@ public class Calculator {
 
     private void evalSubExpr(List<CalcToken> expr) {
         if (expr.size() > 1) {
-            int operationIndex = 0;
+            int operationIndex = 0, i1, i2;
+            Operation operation;
+            double operand1, operand2;
 
 
             CalcToken mult = new CalcToken("*");
@@ -69,47 +83,57 @@ public class Calculator {
             CalcToken add = new CalcToken("+");
             CalcToken sub = new CalcToken("-");
 
-            while (expr.contains(mult)) {
-                operationIndex = expr.indexOf(mult);
-                expr.set(operationIndex - 1, new CalcToken(
-                        Double.parseDouble(expr.get(operationIndex - 1).content) *
-                                Double.parseDouble(expr.get(operationIndex + 1).content) + ""
-                ));
-                expr.remove(operationIndex);
-                expr.remove(operationIndex);
-            }
-            while (expr.contains(div)) {
-                operationIndex = expr.indexOf(div);
-                expr.set(operationIndex - 1, new CalcToken(
-                        Double.parseDouble(expr.get(operationIndex - 1).content) /
-                                Double.parseDouble(expr.get(operationIndex + 1).content) + ""
-                ));
-                expr.remove(operationIndex);
-                expr.remove(operationIndex);
+            while (expr.contains(mult) || expr.contains(div)) {
+                i1 = expr.indexOf(mult);
+                i2 = expr.indexOf(div);
+                if (i1 < i2 && i1 > 0 || i2 == -1) {
+                    operationIndex = i1;
+                    operation = Operation.MULTIPLICATION;
+                } else {
+                    operationIndex = i2;
+                    operation = Operation.DIVISION;
+                }
+
+                operate(expr, operationIndex, operation);
             }
 
-            while (expr.contains(add)) {
-                operationIndex = expr.indexOf(add);
-                expr.set(operationIndex - 1, new CalcToken(
-                        Double.parseDouble(expr.get(operationIndex - 1).content) +
-                                Double.parseDouble(expr.get(operationIndex + 1).content) + ""
-                ));
-                expr.remove(operationIndex);
-                expr.remove(operationIndex);
+            while (expr.contains(add) || expr.contains(sub)) {
+                i1 = expr.indexOf(add);
+                i2 = expr.indexOf(sub);
+                if (i1 < i2 && i1 > 0 || i2 == -1) {
+                    operationIndex = i1;
+                    operation = Operation.ADDITION;
+                } else {
+                    operationIndex = i2;
+                    operation = Operation.SUBSTRACTION;
+                }
+
+                operate(expr, operationIndex, operation);
             }
-
-            while (expr.contains(sub)) {
-                operationIndex = expr.indexOf(sub);
-                expr.set(operationIndex - 1, new CalcToken(
-                        Double.parseDouble(expr.get(operationIndex - 1).content) -
-                                Double.parseDouble(expr.get(operationIndex + 1).content) + ""
-                ));
-                expr.remove(operationIndex);
-                expr.remove(operationIndex);
-            }
-
-
         }
+    }
+
+    private void operate(List<CalcToken> expr, int operationIndex, Operation operation) {
+        double o1 = Double.parseDouble(expr.get(operationIndex - 1).content);
+        double o2 = Double.parseDouble(expr.get(operationIndex + 1).content);
+        double result = 0;
+        switch (operation) {
+            case ADDITION:
+                result = o1 + o2;
+                break;
+            case SUBSTRACTION:
+                result = o1 - o2;
+                break;
+            case MULTIPLICATION:
+                result = o1 * o2;
+                break;
+            case DIVISION:
+                result = o1 / o2;
+                break;
+        }
+        expr.set(operationIndex - 1, new CalcToken(result + ""));
+        expr.remove(operationIndex);
+        expr.remove(operationIndex);
     }
 
     public void defineBrackets() {
