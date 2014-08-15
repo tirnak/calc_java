@@ -13,7 +13,7 @@ public class Main {
 
         Scanner in = new Scanner(System.in);
 
-        String str = checkString2;//in.nextLine().replace(" ", "");
+        String str = /*checkString2;//*/in.nextLine().replace(" ", "");
 
         checkInput(str);
 
