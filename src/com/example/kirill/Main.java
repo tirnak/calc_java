@@ -13,10 +13,9 @@ public class Main {
 
         Scanner in = new Scanner(System.in);
 
-        String str = /*checkString2;//*/in.nextLine().replace(" ", "");
+        String str = in.nextLine().replace(" ", "");
 
         checkInput(str);
-
 
         Parser parser = new Parser(str);
 
@@ -26,6 +25,11 @@ public class Main {
 
     }
 
+    /**
+     * If input contains unavailable tokens/symbols - returns error
+     *
+     * @param str input string to be checked
+     */
     private static void checkInput(String str) {
 
         String availableExpressions = "(PI|E|cos|\\(|\\)|sin|exp|\\+|\\-|/|\\*|\\.|\\d+|\\s+)";

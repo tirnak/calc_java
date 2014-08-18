@@ -7,6 +7,9 @@ import java.util.*;
  */
 public class Calculator {
 
+    /**
+     * Enumeration of operations to be performed
+     */
     public enum Operation {
         ADDITION,
         SUBSTRACTION,
@@ -14,15 +17,30 @@ public class Calculator {
         MULTIPLICATION
     }
 
+    /**
+     * Tokenized input to be calculated
+     */
     public ArrayList<CalcToken> tokens = new ArrayList<CalcToken>();
 
+    /**
+     * Stores indexes of brackets in tokens array
+     */
     public LinkedList<BracketPair> bracketPairs = new LinkedList<BracketPair>();
 
+    /**
+     * Constructor
+     * @param p
+     */
     public Calculator(Parser p) {
         tokens = p.tokens;
         defineBrackets();
     }
 
+    /**
+     * Main evaluation method
+     *
+     * @return double
+     */
     public double eval() {
 
         while (bracketPairs.size() > 0) {
@@ -42,9 +60,14 @@ public class Calculator {
                 tokens.remove(bracketPair.posOpened + 1);
             }
 
-
-
-            defineBrackets();
+            for (BracketPair bp : bracketPairs) {
+                if (bp.posOpened > bracketPair.posClosed) {
+                    bp.posOpened -= bracketPair.getDistance();
+                }
+                if (bp.posClosed > bracketPair.posClosed) {
+                    bp.posClosed -= bracketPair.getDistance();
+                }
+            }
 
         }
 
@@ -52,6 +75,13 @@ public class Calculator {
 
         return Double.parseDouble(tokens.get(0).content);
     }
+
+    /**
+     * Calculates expressions without/inside of brackets and calc outer function of result
+     *
+     * @param expr unbracketed part of expression to be calculated
+     * @param func sin,cos or exp outside of 'expr'.
+     */
     private void evalSubExpr(List<CalcToken> expr, CalcToken func) {
 
         evalSubExpr(expr);
@@ -69,6 +99,11 @@ public class Calculator {
         expr.set(0, new CalcToken(tmpResult + ""));
     }
 
+    /**
+     * Calculates expressions without/inside of brackets
+     *
+     * @param expr unbracketed part of expression to be calculated
+     */
     private void evalSubExpr(List<CalcToken> expr) {
         if (expr.size() > 1) {
             int operationIndex = 0, i1, i2;
@@ -109,6 +144,13 @@ public class Calculator {
         }
     }
 
+    /**
+     * execute single calculation operation
+     *
+     * @param expr
+     * @param operationIndex index of token, containing operation symbol
+     * @param operation type of operation
+     */
     private void operate(List<CalcToken> expr, int operationIndex, Operation operation) {
         double o1 = Double.parseDouble(expr.get(operationIndex - 1).content);
         double o2 = Double.parseDouble(expr.get(operationIndex + 1).content);
@@ -132,6 +174,9 @@ public class Calculator {
         expr.remove(operationIndex);
     }
 
+    /**
+     * Finds all brackets in tokens array and sort them into pairs
+     */
     public void defineBrackets() {
         bracketPairs = new LinkedList<BracketPair>();
         int depth = 0, maxDepth = 0;
@@ -169,10 +214,27 @@ public class Calculator {
     }
 
     class BracketPair {
+        /**
+         * defines nesting level
+         */
         int depth;
+
+        /**
+         * index of opening bracket in tokens array
+         */
         int posOpened;
+
+        /**
+         * index of closing bracket in tokens array
+         */
         int posClosed;
 
+        /**
+         * Constructor
+         *
+         * @param posOpened
+         * @param depth
+         */
         public BracketPair(int posOpened, int depth) {
             this.posOpened = posOpened;
             this.depth = depth;
@@ -182,6 +244,11 @@ public class Calculator {
             posClosed = position;
         }
 
+        /**
+         * Gets number of tokens from opening to closing bracket
+         *
+         * @return int
+         */
         public int getDistance() {
             return posClosed - posOpened + 1;
         }

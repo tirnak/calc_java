@@ -5,6 +5,9 @@ package com.example.kirill;
  */
 public class CalcToken {
 
+    /**
+     * Enumeration of token types
+     */
     public enum Type {
         NULL,
         NUM,
@@ -21,9 +24,18 @@ public class CalcToken {
 
     public Type type;
 
+    /**
+     * Constructor
+     *
+     * @param str
+     */
     public CalcToken(String str) {
         content = str;
 
+        defineType();
+    }
+
+    private void defineType() {
         if (isInteger()) {
             castConstToNum();
             type = Type.NUM;
@@ -50,7 +62,12 @@ public class CalcToken {
         return type;
     }
 
-
+    /**
+     * Defines if token is starting expression.
+     * Needed for negative numbers
+     *
+     * @return boolean
+     */
     public boolean isStartOfSubExpr () {
         switch (getType()) {
             case OPEN_BRACKET:
@@ -76,6 +93,9 @@ public class CalcToken {
         return true;
     }
 
+    /**
+     * Converts constants to numbers
+     */
     private void castConstToNum() {
         if (content.equals("PI")) {
             content = "3.14159265359";
@@ -112,6 +132,12 @@ public class CalcToken {
         return content.equals(")");
     }
 
+    /**
+     * Overrides to compare by value, not reference
+     *
+     * @param object object (CalcToken) to be compared to
+     * @return boolean
+     */
     @Override
     public boolean equals (Object object) {
 

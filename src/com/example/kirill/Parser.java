@@ -4,8 +4,16 @@ import java.util.*;
 
 public class Parser {
 
+    /**
+     * Tokenized input to be calculated
+     */
     public ArrayList<CalcToken> tokens = new ArrayList<CalcToken>();
 
+    /**
+     * Constructor
+     *
+     * @param str string to be parsed
+     */
     public Parser(String str) {
 
         StringTokenizer st = new StringTokenizer(str, "+-*/()", true);
@@ -23,6 +31,9 @@ public class Parser {
         }
     }
 
+    /**
+     * Makes from consequent tokens like "-" and "34.23423" correct token with negative number "-34.23423"
+     */
     private void correctNegativeNumbers() {
         LinkedList<Integer> indexesToRemove = new LinkedList<Integer>();
 
