@@ -7,9 +7,10 @@ to run:
 ```bash
 $ chmod +x run.sh
 $ ./run.sh
+```
+and type in the expression.
 
-type in the expression.
-Handles 
+Handles:
 * brackets
 * sin, cos, exp functions
 * add, substract
