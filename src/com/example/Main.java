@@ -1,4 +1,4 @@
-package com.example.kirill;
+package com.example;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -21,7 +21,7 @@ public class Main {
 
         Calculator calc = new Calculator(parser);
 
-        System.out.print(str + " = " + calc.eval());
+        System.out.print(str + " = " + calc.eval() + System.lineSeparator());
 
     }
 

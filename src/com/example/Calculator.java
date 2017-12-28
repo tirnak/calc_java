@@ -1,10 +1,7 @@
-package com.example.kirill;
+package com.example;
 
 import java.util.*;
 
-/**
- * Created by kirill on 14.08.14.
- */
 public class Calculator {
 
     /**
@@ -20,12 +17,12 @@ public class Calculator {
     /**
      * Tokenized input to be calculated
      */
-    public ArrayList<CalcToken> tokens = new ArrayList<CalcToken>();
+    public ArrayList<CalcToken> tokens = new ArrayList<>();
 
     /**
      * Stores indexes of brackets in tokens array
      */
-    public LinkedList<BracketPair> bracketPairs = new LinkedList<BracketPair>();
+    public LinkedList<BracketPair> bracketPairs = new LinkedList<>();
 
     /**
      * Constructor
@@ -178,9 +175,9 @@ public class Calculator {
      * Finds all brackets in tokens array and sort them into pairs
      */
     public void defineBrackets() {
-        bracketPairs = new LinkedList<BracketPair>();
+        bracketPairs = new LinkedList<>();
         int depth = 0, maxDepth = 0;
-        LinkedList<BracketPair> bracketStack = new LinkedList<BracketPair>();
+        LinkedList<BracketPair> bracketStack = new LinkedList<>();
 
         for (int i = 0, length = tokens.size(); i < length; i++) {
             if (tokens.get(i).getType() == CalcToken.Type.OPEN_BRACKET) {

@@ -1,4 +1,4 @@
-package com.example.kirill;
+package com.example;
 
 import java.util.*;
 
@@ -7,7 +7,7 @@ public class Parser {
     /**
      * Tokenized input to be calculated
      */
-    public ArrayList<CalcToken> tokens = new ArrayList<CalcToken>();
+    public ArrayList<CalcToken> tokens = new ArrayList<>();
 
     /**
      * Constructor
@@ -24,6 +24,7 @@ public class Parser {
 
         correctNegativeNumbers();
 
+        System.out.println("tokens are:");
         for (CalcToken token: tokens) {
             System.out.println(
                     token.content
@@ -35,7 +36,7 @@ public class Parser {
      * Makes from consequent tokens like "-" and "34.23423" correct token with negative number "-34.23423"
      */
     private void correctNegativeNumbers() {
-        LinkedList<Integer> indexesToRemove = new LinkedList<Integer>();
+        LinkedList<Integer> indexesToRemove = new LinkedList<>();
 
         for (int i = 0, length = tokens.size(); i < length; i++) {
 

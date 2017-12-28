@@ -1,8 +1,5 @@
-package com.example.kirill;
+package com.example;
 
-/**
- * Created by kirill on 12.08.14.
- */
 public class CalcToken {
 
     /**
